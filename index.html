@@ -1,99 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TravelPro Admin - Modern Travel Agency Management</title>
+    <title>TravelPro - Modern Travel Agency Management</title>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <link href="./dist/output.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="./js/app.js"></script>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-purple-900 transition-colors duration-300" x-data="{ sidebarOpen: true }" :class="{ 'dark': $store.app.darkMode }">
+
+<body
+    class="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-purple-900 transition-colors duration-300"
+    x-data="{ sidebarOpen: true }" :class="{ 'dark': $store.app.darkMode }">
     <div class="min-h-screen">
         <!-- Animated Background -->
         <div class="fixed inset-0 -z-10 overflow-hidden">
             <div class="absolute inset-0 bg-gray-200/5 dark:bg-gray-100/5 bg-dot"></div>
-            <div class="absolute w-72 h-72 bg-indigo-400/15 dark:bg-indigo-400/10 rounded-full blur-3xl top-[10%] right-[15%] animate-float"></div>
-            <div class="absolute w-96 h-96 bg-emerald-400/15 dark:bg-emerald-400/10 rounded-full blur-3xl bottom-[20%] left-[10%] animate-float"></div>
-            <div class="absolute w-64 h-64 bg-amber-400/15 dark:bg-amber-400/10 rounded-full blur-3xl top-[50%] right-[30%] animate-float"></div>
-            
+            <div
+                class="absolute w-72 h-72 bg-indigo-400/15 dark:bg-indigo-400/10 rounded-full blur-3xl top-[10%] right-[15%] animate-float">
+            </div>
+            <div
+                class="absolute w-96 h-96 bg-emerald-400/15 dark:bg-emerald-400/10 rounded-full blur-3xl bottom-[20%] left-[10%] animate-float">
+            </div>
+            <div
+                class="absolute w-64 h-64 bg-amber-400/15 dark:bg-amber-400/10 rounded-full blur-3xl top-[50%] right-[30%] animate-float">
+            </div>
+
             <!-- Animated Airplanes -->
-            <div class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[15%] left-[-50px] animate-flight-1">
+            <div
+                class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[15%] left-[-50px] animate-flight-1">
                 <i class="fas fa-plane"></i>
             </div>
-            <div class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[35%] right-[-50px] animate-flight-2">
+            <div
+                class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[35%] right-[-50px] animate-flight-2">
                 <i class="fas fa-plane"></i>
             </div>
-            <div class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[55%] left-[-50px] animate-flight-3">
+            <div
+                class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[55%] left-[-50px] animate-flight-3">
                 <i class="fas fa-plane"></i>
             </div>
-            <div class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none bottom-[25%] right-[-50px] animate-flight-4">
+            <div
+                class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none bottom-[25%] right-[-50px] animate-flight-4">
                 <i class="fas fa-plane"></i>
             </div>
-            <div class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[75%] left-[-50px] animate-flight-5">
+            <div
+                class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[75%] left-[-50px] animate-flight-5">
                 <i class="fas fa-plane"></i>
             </div>
-            <div class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[65%] right-[-50px] animate-flight-6">
+            <div
+                class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[65%] right-[-50px] animate-flight-6">
                 <i class="fas fa-plane"></i>
             </div>
-            <div class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[45%] left-[-50px] animate-flight-7">
+            <div
+                class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[45%] left-[-50px] animate-flight-7">
                 <i class="fas fa-plane"></i>
             </div>
-            <div class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[25%] right-[-50px] animate-flight-8">
+            <div
+                class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[25%] right-[-50px] animate-flight-8">
                 <i class="fas fa-plane"></i>
             </div>
-            <div class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none bottom-[15%] left-[-50px] animate-flight-9">
+            <div
+                class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none bottom-[15%] left-[-50px] animate-flight-9">
                 <i class="fas fa-plane"></i>
             </div>
-            <div class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[75%] right-[-50px] animate-flight-10">
+            <div
+                class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[75%] right-[-50px] animate-flight-10">
                 <i class="fas fa-plane"></i>
             </div>
         </div>
 
         <!-- Sidebar -->
-        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-64'" class="fixed top-0 left-0 z-40 h-screen w-64 transition-transform duration-300 ease-in-out bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-r border-gray-200 dark:border-gray-700">
+        <aside :class="[
+            sidebarOpen ? 'translate-x-0' : '-translate-x-64',
+            $store.app.sidebarMini ? 'w-20' : 'w-64'
+        ]"
+            class="fixed top-0 left-0 z-40 h-screen transition-all duration-300 ease-in-out bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-r border-gray-200 dark:border-gray-700">
+            <!-- Collapse Button -->
+            <button @click="$store.app.toggleSidebar()"
+                class="absolute -right-3 top-1/2 transform -translate-y-1/2 w-6 h-16 bg-white dark:bg-gray-700 rounded-r-lg border border-l-0 border-gray-200 dark:border-gray-600 flex flex-col items-center justify-center gap-1 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 lg:flex hidden group shadow-sm transition-colors duration-300"
+                :class="{ 'bg-gray-50 dark:bg-gray-600': $store.app.sidebarMini }">
+                <div class="w-3.5 h-0.5 bg-current rounded-full transition-all duration-300 ease-in-out"
+                    :class="$store.app.sidebarMini ? '-rotate-45 translate-y-px' : ''"></div>
+                <div class="w-3.5 h-0.5 bg-current rounded-full transition-all duration-300 ease-in-out"
+                    :class="$store.app.sidebarMini ? 'rotate-45 -translate-y-px' : ''"></div>
+                <span
+                    class="absolute left-full ml-2 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap"
+                    x-text="$store.app.sidebarMini ? 'Expand Sidebar' : 'Collapse Sidebar'"></span>
+            </button>
+
             <div class="flex items-center justify-between p-4">
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">TravelPro Admin</h1>
-                <button @click="sidebarOpen = !sidebarOpen" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <i class="fas fa-bars text-gray-600 dark:text-gray-300"></i>
-                </button>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white transition-opacity duration-300"
+                    :class="$store.app.sidebarMini ? 'opacity-0' : 'opacity-100'">TravelPro</h1>
             </div>
+
             <nav class="p-4 space-y-2">
-                <a href="#" class="flex items-center space-x-3 p-2 rounded-lg bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300">
+                <a href="#"
+                    class="flex items-center p-2 rounded-lg bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300"
+                    :class="$store.app.sidebarMini ? 'justify-center' : 'space-x-3'">
                     <i class="fas fa-home"></i>
-                    <span>Dashboard</span>
+                    <span :class="$store.app.sidebarMini ? 'hidden' : 'block'">Dashboard</span>
                 </a>
-                <a href="#" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                <a href="#"
+                    class="flex items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                    :class="$store.app.sidebarMini ? 'justify-center' : 'space-x-3'">
                     <i class="fas fa-plane-departure"></i>
-                    <span>Bookings</span>
+                    <span :class="$store.app.sidebarMini ? 'hidden' : 'block'">Bookings</span>
                 </a>
-                <a href="#" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                <a href="#"
+                    class="flex items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                    :class="$store.app.sidebarMini ? 'justify-center' : 'space-x-3'">
                     <i class="fas fa-users"></i>
-                    <span>Customers</span>
+                    <span :class="$store.app.sidebarMini ? 'hidden' : 'block'">Customers</span>
                 </a>
-                <a href="#" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                <a href="#"
+                    class="flex items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                    :class="$store.app.sidebarMini ? 'justify-center' : 'space-x-3'">
                     <i class="fas fa-map-marked-alt"></i>
-                    <span>Destinations</span>
+                    <span :class="$store.app.sidebarMini ? 'hidden' : 'block'">Destinations</span>
                 </a>
-                <a href="#" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                <a href="#"
+                    class="flex items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                    :class="$store.app.sidebarMini ? 'justify-center' : 'space-x-3'">
                     <i class="fas fa-calendar-alt"></i>
-                    <span>Itineraries</span>
+                    <span :class="$store.app.sidebarMini ? 'hidden' : 'block'">Itineraries</span>
                 </a>
-                <a href="#" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                <a href="#"
+                    class="flex items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                    :class="$store.app.sidebarMini ? 'justify-center' : 'space-x-3'">
                     <i class="fas fa-chart-line"></i>
-                    <span>Analytics</span>
+                    <span :class="$store.app.sidebarMini ? 'hidden' : 'block'">Analytics</span>
                 </a>
             </nav>
 
             <!-- Dark Mode Toggle -->
             <div class="absolute bottom-0 left-0 right-0 p-4">
-                <button @click="$store.app.toggleDarkMode()" class="flex items-center justify-between w-full p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
-                    <span class="flex items-center space-x-3">
-                        <i class="fas text-lg" :class="$store.app.darkMode ? 'fa-sun text-amber-400' : 'fa-moon text-blue-600'"></i>
-                        <span x-text="$store.app.darkMode ? 'Light Mode' : 'Dark Mode'" class="font-medium"></span>
+                <button @click="$store.app.toggleDarkMode()"
+                    class="flex items-center justify-between w-full p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                    <span class="flex items-center"
+                        :class="$store.app.sidebarMini ? 'w-full justify-center' : 'space-x-3'">
+                        <i class="fas text-lg"
+                            :class="$store.app.darkMode ? 'fa-sun text-amber-400' : 'fa-moon text-blue-600'"></i>
+                        <span x-text="$store.app.darkMode ? 'Light Mode' : 'Dark Mode'" class="font-medium"
+                            :class="$store.app.sidebarMini ? 'hidden' : 'block'"></span>
                     </span>
-                    <div class="relative">
+                    <div class="relative" :class="$store.app.sidebarMini ? 'hidden' : 'block'">
                         <div class="w-10 h-6 bg-gray-200 dark:bg-gray-700 rounded-full transition-colors duration-300">
                             <div class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform duration-300 transform"
                                 :class="$store.app.darkMode ? 'translate-x-4 bg-purple-500' : 'translate-x-0'">
@@ -105,22 +157,45 @@
         </aside>
 
         <!-- Main Content -->
-        <main :class="sidebarOpen ? 'lg:ml-64' : ''" class="transition-all duration-300 ease-in-out">
+        <main :class="[
+            sidebarOpen ? (
+                $store.app.sidebarMini ? 'lg:ml-20' : 'lg:ml-64'
+            ) : ''
+        ]" class="transition-all duration-300 ease-in-out">
             <!-- Top Navigation -->
             <nav class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
                 <div class="px-4 py-3 lg:px-6">
                     <div class="flex items-center justify-between">
-                        <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden">
-                            <i class="fas fa-bars text-gray-600 dark:text-gray-300"></i>
-                        </button>
+                        <div class="flex items-center space-x-2">
+                            <button @click="sidebarOpen = !sidebarOpen"
+                                class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <i class="fas fa-bars text-gray-600 dark:text-gray-300"></i>
+                            </button>
+                            <!-- Search Bar -->
+                            <div class="relative hidden md:block">
+                                <input type="search" placeholder="Search..."
+                                    class="w-64 pl-10 pr-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-transparent transition-colors duration-300">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-search text-gray-500 dark:text-gray-400"></i>
+                                </div>
+                            </div>
+                            <!-- Mobile Search Button -->
+                            <button class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <i class="fas fa-search text-gray-600 dark:text-gray-300"></i>
+                            </button>
+                        </div>
                         <div class="flex items-center space-x-4">
-                            <button class="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-300">
+                            <button
+                                class="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-300">
                                 <i class="fas fa-bell"></i>
                             </button>
                             <div class="relative" x-data="{ open: false }">
                                 <button @click="open = !open" class="flex items-center space-x-2">
-                                    <img src="https://ui-avatars.com/api/?name=Admin+User" alt="Profile" class="w-8 h-8 rounded-full">
-                                    <span class="hidden lg:block text-sm font-medium text-gray-700 dark:text-gray-300">Admin User</span>
+                                    <img src="https://ui-avatars.com/api/?name=Admin+User" alt="Profile"
+                                        class="w-8 h-8 rounded-full">
+                                    <span
+                                        class="hidden lg:block text-sm font-medium text-gray-700 dark:text-gray-300">Admin
+                                        User</span>
                                 </button>
                             </div>
                         </div>
@@ -131,91 +206,159 @@
             <!-- Dashboard Content -->
             <div class="p-6 lg:p-8">
                 <!-- Stats Overview -->
-                <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div
+                        class="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Total Bookings</p>
                                 <h3 class="text-2xl font-bold text-gray-900 dark:text-white mt-1">1,482</h3>
                                 <p class="text-sm text-green-600 dark:text-green-400 mt-1">↑ 12.5%</p>
                             </div>
-                            <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/10 rounded-lg flex items-center justify-center">
+                            <div
+                                class="w-12 h-12 bg-purple-100 dark:bg-purple-900/10 rounded-lg flex items-center justify-center">
                                 <i class="fas fa-ticket-alt text-purple-600 dark:text-purple-400 text-xl"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                    <div
+                        class="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Revenue</p>
                                 <h3 class="text-2xl font-bold text-gray-900 dark:text-white mt-1">$245,890</h3>
                                 <p class="text-sm text-green-600 dark:text-green-400 mt-1">↑ 8.2%</p>
                             </div>
-                            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/10 rounded-lg flex items-center justify-center">
+                            <div
+                                class="w-12 h-12 bg-blue-100 dark:bg-blue-900/10 rounded-lg flex items-center justify-center">
                                 <i class="fas fa-dollar-sign text-blue-600 dark:text-blue-400 text-xl"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                    <div
+                        class="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Active Tours</p>
                                 <h3 class="text-2xl font-bold text-gray-900 dark:text-white mt-1">38</h3>
                                 <p class="text-sm text-green-600 dark:text-green-400 mt-1">↑ 4.1%</p>
                             </div>
-                            <div class="w-12 h-12 bg-green-100 dark:bg-green-900/10 rounded-lg flex items-center justify-center">
+                            <div
+                                class="w-12 h-12 bg-green-100 dark:bg-green-900/10 rounded-lg flex items-center justify-center">
                                 <i class="fas fa-route text-green-600 dark:text-green-400 text-xl"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                    <div
+                        class="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm font-medium text-gray-600 dark:text-gray-300">Customer Rating</p>
                                 <h3 class="text-2xl font-bold text-gray-900 dark:text-white mt-1">4.8/5.0</h3>
                                 <p class="text-sm text-green-600 dark:text-green-400 mt-1">↑ 0.3</p>
                             </div>
-                            <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/10 rounded-lg flex items-center justify-center">
+                            <div
+                                class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/10 rounded-lg flex items-center justify-center">
                                 <i class="fas fa-star text-yellow-600 dark:text-yellow-400 text-xl"></i>
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
 
                 <!-- Recent Bookings & Analytics -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <!-- Recent Bookings -->
-                    <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                    <div
+                        class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
                         <div class="p-6">
                             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Recent Bookings</h2>
                             <div class="mt-4 space-y-4">
-                                <!-- <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <div
+                                    class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                                     <div class="flex items-center space-x-4">
-                                        <img src="https://ui-avatars.com/api/?name=John+Doe" alt="Customer" class="w-10 h-10 rounded-full">
+                                        <img src="https://ui-avatars.com/api/?name=John+Doe" alt="Customer"
+                                            class="w-10 h-10 rounded-full">
                                         <div>
-                                            <h4 class="font-medium text-gray-900 dark:text-white">Maldives Luxury Resort</h4>
+                                            <h4 class="font-medium text-gray-900 dark:text-white">Maldives Luxury Resort
+                                            </h4>
                                             <p class="text-sm text-gray-500 dark:text-gray-300">John Doe • 2 Adults</p>
                                         </div>
                                     </div>
-                                    <span class="px-3 py-1 text-sm text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-900/10 rounded-full">Confirmed</span>
-                                </div> -->
-                                <!-- More booking items... -->
+                                    <span
+                                        class="px-3 py-1 text-sm text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-900/10 rounded-full">Confirmed</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                    <div class="flex items-center space-x-4">
+                                        <img src="https://ui-avatars.com/api/?name=Jane+Smith" alt="Jane Smith"
+                                            class="w-10 h-10 rounded-full">
+                                        <div>
+                                            <h4 class="font-medium text-gray-900 dark:text-white">Jane Smith</h4>
+                                            <p class="text-sm text-gray-500 dark:text-gray-300">Bali Adventure</p>
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="px-3 py-1 text-sm text-yellow-700 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/10 rounded-full">Pending</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Popular Destinations -->
+                    <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                        <div class="p-6">
+                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Popular Destinations</h2>
+                            <div class="mt-4 space-y-4">
+                                <div class="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/10 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-mountain text-blue-600 dark:text-blue-400 text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-900 dark:text-white">Swiss Alps</h4>
+                                        <div class="flex items-center space-x-2 mt-1">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-star text-yellow-400"></i>
+                                                <span class="ml-1 text-sm text-gray-500 dark:text-gray-400">4.9</span>
+                                            </div>
+                                            <span class="text-sm text-gray-400 dark:text-gray-500">•</span>
+                                            <span class="text-sm text-gray-500 dark:text-gray-400">152 bookings this month</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/10 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-umbrella-beach text-purple-600 dark:text-purple-400 text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-900 dark:text-white">Maldives</h4>
+                                        <div class="flex items-center space-x-2 mt-1">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-star text-yellow-400"></i>
+                                                <span class="ml-1 text-sm text-gray-500 dark:text-gray-400">4.8</span>
+                                            </div>
+                                            <span class="text-sm text-gray-400 dark:text-gray-500">•</span>
+                                            <span class="text-sm text-gray-500 dark:text-gray-400">138 bookings this month</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Analytics Chart -->
-                    <!-- <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                    <div
+                        class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
                         <div class="p-6">
                             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Booking Analytics</h2>
                             <div class="mt-4 h-64 flex items-center justify-center">
                                 <p class="text-gray-500 dark:text-gray-300">Chart will be implemented with Chart.js</p>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </main>
     </div>
 </body>
+
 </html>

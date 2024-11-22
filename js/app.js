@@ -4,6 +4,13 @@ document.addEventListener('alpine:init', () => {
         // User preferences
         darkMode: false,
         sidebarCollapsed: false,
+        sidebarMini: false,
+
+        // Toggle sidebar mini mode
+        toggleSidebar() {
+            this.sidebarMini = !this.sidebarMini;
+            localStorage.setItem('sidebarMini', JSON.stringify(this.sidebarMini));
+        },
 
         // Notification system
         notifications: [],
@@ -42,6 +49,12 @@ document.addEventListener('alpine:init', () => {
                 if (this.darkMode) {
                     document.documentElement.classList.add('dark');
                 }
+            }
+
+            // Load sidebar mini state
+            const savedSidebarMini = localStorage.getItem('sidebarMini');
+            if (savedSidebarMini !== null) {
+                this.sidebarMini = JSON.parse(savedSidebarMini);
             }
         }
     });
