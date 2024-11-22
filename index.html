@@ -113,7 +113,8 @@
                 <!-- Mini Logo -->
                 <div class="hidden transition-opacity duration-300"
                     :class="$store.app.sidebarMini ? 'lg:block' : 'lg:hidden'">
-                    <img src="./images/logo-square-dark.png" alt="TravelPro Logo Dark" class="h-8 w-8 hidden dark:block">
+                    <img src="./images/logo-square-dark.png" alt="TravelPro Logo Dark"
+                        class="h-8 w-8 hidden dark:block">
                     <img src="./images/logo-square-light.png" alt="TravelPro Logo Light" class="h-8 w-8 dark:hidden">
                 </div>
                 <!-- Mobile Close Button -->
@@ -193,6 +194,7 @@
                 class="fixed top-0 left-0 right-0 lg:relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 z-20">
                 <div class="px-4 py-3 lg:px-6">
                     <div class="flex items-center justify-between">
+                        <!-- Left Side -->
                         <div class="flex items-center space-x-2">
                             <button @click="$store.app.sidebarOpen = !$store.app.sidebarOpen"
                                 class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -206,24 +208,138 @@
                                     <i class="fas fa-search text-gray-500 dark:text-gray-400"></i>
                                 </div>
                             </div>
-                            <!-- Mobile Search Button -->
-                            <button class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-                                <i class="fas fa-search text-gray-600 dark:text-gray-300"></i>
-                            </button>
                         </div>
+                        <!-- Right Side -->
                         <div class="flex items-center space-x-4">
-                            <button
-                                class="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-300">
-                                <i class="fas fa-bell"></i>
-                            </button>
-                            <div class="relative" x-data="{ open: false }">
-                                <button @click="open = !open" class="flex items-center space-x-2">
-                                    <img src="https://ui-avatars.com/api/?name=Admin+User" alt="Profile"
-                                        class="w-8 h-8 rounded-full">
-                                    <span
-                                        class="hidden lg:block text-sm font-medium text-gray-700 dark:text-gray-300">Admin
-                                        User</span>
+                            <!-- Notifications -->
+                            <div class="relative" x-data="{ open: false }" 
+                                @mouseenter="open = true" 
+                                @mouseleave="open = false">
+                                <button class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 relative">
+                                    <i class="fas fa-bell text-gray-600 dark:text-gray-300"></i>
+                                    <!-- Notification Badge -->
+                                    <div x-show="$store.app.getUnreadCount() > 0"
+                                        class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                                        <span class="text-xs text-white font-medium" x-text="$store.app.getUnreadCount()"></span>
+                                    </div>
                                 </button>
+                                <!-- Notifications Dropdown -->
+                                <div x-show="open" x-cloak
+                                    class="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+                                    x-transition:enter="transition ease-out duration-100"
+                                    x-transition:enter-start="opacity-0 scale-95"
+                                    x-transition:enter-end="opacity-100 scale-100"
+                                    x-transition:leave="transition ease-in duration-75"
+                                    x-transition:leave-start="opacity-100 scale-100"
+                                    x-transition:leave-end="opacity-0 scale-95">
+                                    <!-- Header -->
+                                    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                                        <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Notifications</h3>
+                                        <button @click="$store.app.markAllAsRead()" 
+                                            class="text-xs text-primary-600 dark:text-primary-400 hover:underline"
+                                            x-show="$store.app.getUnreadCount() > 0">
+                                            Mark all as read
+                                        </button>
+                                    </div>
+                                    <!-- Notification List -->
+                                    <div class="divide-y divide-gray-200 dark:divide-gray-700 max-h-[400px] overflow-y-auto scrollbar-hide">
+                                        <template x-for="notification in $store.app.notifications" :key="notification.id">
+                                            <div class="p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150"
+                                                :class="{ 'bg-blue-50/50 dark:bg-blue-900/20': !notification.read }"
+                                                @mouseenter="$store.app.markAsRead(notification.id)">
+                                                <div class="flex items-start space-x-3">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center">
+                                                            <i class="fas" :class="notification.icon + ' text-primary-600 dark:text-primary-400'"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-1 min-w-0">
+                                                        <p class="text-sm font-medium text-gray-900 dark:text-white" x-text="notification.title"></p>
+                                                        <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2" x-text="notification.message"></p>
+                                                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1" x-text="notification.time"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <!-- Footer -->
+                                    <div class="p-2 border-t border-gray-200 dark:border-gray-700">
+                                        <a href="#" class="block text-center text-sm text-primary-600 dark:text-primary-400 hover:underline p-2">
+                                            View all notifications
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- User Menu -->
+                            <div class="relative" x-data="{ open: false }" 
+                                @mouseenter="open = true" 
+                                @mouseleave="open = false">
+                                <button class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <img :src="$store.app.user.avatar" alt="User Avatar"
+                                        class="w-8 h-8 rounded-full border-2 border-primary-500">
+                                    <div class="hidden lg:block text-left">
+                                        <div class="text-sm font-medium text-gray-700 dark:text-gray-300" x-text="$store.app.user.name"></div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400" x-text="$store.app.user.role"></div>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-xs text-gray-500 dark:text-gray-400 hidden lg:block"
+                                        :class="{ 'transform rotate-180': open }"></i>
+                                </button>
+                                <!-- Dropdown Menu -->
+                                <div x-show="open" x-cloak
+                                    class="absolute right-0 mt-2 w-72 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+                                    x-transition:enter="transition ease-out duration-100"
+                                    x-transition:enter-start="opacity-0 scale-95"
+                                    x-transition:enter-end="opacity-100 scale-100"
+                                    x-transition:leave="transition ease-in duration-75"
+                                    x-transition:leave-start="opacity-100 scale-100"
+                                    x-transition:leave-end="opacity-0 scale-95">
+                                    <!-- User Info -->
+                                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                                        <div class="flex items-center space-x-3">
+                                            <img :src="$store.app.user.avatar" alt="User Avatar"
+                                                class="w-16 h-16 rounded-full border-2 border-primary-500">
+                                            <div>
+                                                <div class="text-lg font-semibold text-gray-900 dark:text-white"
+                                                    x-text="$store.app.user.name"></div>
+                                                <div class="text-sm text-gray-600 dark:text-gray-300"
+                                                    x-text="$store.app.user.email"></div>
+                                                <div class="mt-1 flex items-center">
+                                                    <div class="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                                                    <span class="text-sm text-gray-500 dark:text-gray-400"
+                                                        x-text="$store.app.user.status"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Menu Items -->
+                                    <div class="p-2">
+                                        <a href="#"
+                                            class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300">
+                                            <i
+                                                class="fas fa-user-circle w-5 text-center text-gray-500 dark:text-gray-400"></i>
+                                            <span>Profile Settings</span>
+                                        </a>
+                                        <a href="#"
+                                            class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300">
+                                            <i class="fas fa-cog w-5 text-center text-gray-500 dark:text-gray-400"></i>
+                                            <span>Account Settings</span>
+                                        </a>
+                                        <a href="#"
+                                            class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300">
+                                            <i
+                                                class="fas fa-question-circle w-5 text-center text-gray-500 dark:text-gray-400"></i>
+                                            <span>Help Center</span>
+                                        </a>
+                                    </div>
+                                    <!-- Logout -->
+                                    <div class="p-2 border-t border-gray-200 dark:border-gray-700">
+                                        <button
+                                            class="flex items-center space-x-3 p-3 w-full rounded-lg hover:bg-red-50 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400">
+                                            <i class="fas fa-sign-out-alt w-5 text-center"></i>
+                                            <span>Sign Out</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
