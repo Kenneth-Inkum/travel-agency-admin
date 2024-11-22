@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="./js/app.js"></script>
     <style>
-        [x-cloak] { display: none !important; }
+        [x-cloak] {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -102,8 +104,18 @@
             </button>
 
             <div class="flex items-center justify-between p-4">
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white transition-opacity duration-300"
-                    :class="$store.app.sidebarMini ? 'lg:opacity-0' : 'opacity-100'">TravelPro</h1>
+                <!-- Full Logo -->
+                <div class="flex items-center transition-opacity duration-300"
+                    :class="$store.app.sidebarMini ? 'lg:hidden' : ''">
+                    <img src="./images/logo-dark.png" alt="TravelPro Logo Dark" class="h-8 hidden dark:block">
+                    <img src="./images/logo-light.png" alt="TravelPro Logo Light" class="h-8 dark:hidden">
+                </div>
+                <!-- Mini Logo -->
+                <div class="hidden transition-opacity duration-300"
+                    :class="$store.app.sidebarMini ? 'lg:block' : 'lg:hidden'">
+                    <img src="./images/logo-square-dark.png" alt="TravelPro Logo Dark" class="h-8 w-8 hidden dark:block">
+                    <img src="./images/logo-square-light.png" alt="TravelPro Logo Light" class="h-8 w-8 dark:hidden">
+                </div>
                 <!-- Mobile Close Button -->
                 <button @click="$store.app.sidebarOpen = false"
                     class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
