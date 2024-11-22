@@ -9,12 +9,20 @@
     <link href="./dist/output.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="./js/app.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
 </head>
 
 <body
     class="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-purple-900 transition-colors duration-300"
-    x-data="{ sidebarOpen: true }" :class="{ 'dark': $store.app.darkMode }">
+    x-data :class="{ 'dark': $store.app.darkMode }">
     <div class="min-h-screen">
+        <!-- Mobile Sidebar Overlay -->
+        <div x-show="$store.app.sidebarOpen" x-cloak @click="$store.app.sidebarOpen = false"
+            class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-30 lg:hidden transition-opacity duration-300">
+        </div>
+
         <!-- Animated Background -->
         <div class="fixed inset-0 -z-10 overflow-hidden">
             <div class="absolute inset-0 bg-gray-200/5 dark:bg-gray-100/5 bg-dot"></div>
@@ -72,11 +80,14 @@
         </div>
 
         <!-- Sidebar -->
-        <aside :class="[
-            sidebarOpen ? 'translate-x-0' : '-translate-x-64',
-            $store.app.sidebarMini ? 'w-20' : 'w-64'
-        ]"
-            class="fixed top-0 left-0 z-40 h-screen transition-all duration-300 ease-in-out bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-r border-gray-200 dark:border-gray-700">
+        <aside x-cloak
+            class="fixed top-0 left-0 z-40 h-screen transition-all duration-300 ease-in-out bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-r border-gray-200 dark:border-gray-700"
+            :class="[
+                'w-64',
+                $store.app.sidebarOpen ? 'translate-x-0' : '-translate-x-64',
+                'lg:translate-x-0',
+                $store.app.sidebarMini ? 'lg:w-20' : 'lg:w-64'
+            ]">
             <!-- Collapse Button -->
             <button @click="$store.app.toggleSidebar()"
                 class="absolute -right-3 top-1/2 transform -translate-y-1/2 w-6 h-16 bg-white dark:bg-gray-700 rounded-r-lg border border-l-0 border-gray-200 dark:border-gray-600 flex flex-col items-center justify-center gap-1 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 lg:flex hidden group shadow-sm transition-colors duration-300"
@@ -92,7 +103,12 @@
 
             <div class="flex items-center justify-between p-4">
                 <h1 class="text-2xl font-bold text-gray-900 dark:text-white transition-opacity duration-300"
-                    :class="$store.app.sidebarMini ? 'opacity-0' : 'opacity-100'">TravelPro</h1>
+                    :class="$store.app.sidebarMini ? 'lg:opacity-0' : 'opacity-100'">TravelPro</h1>
+                <!-- Mobile Close Button -->
+                <button @click="$store.app.sidebarOpen = false"
+                    class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i class="fas fa-times text-gray-600 dark:text-gray-300"></i>
+                </button>
             </div>
 
             <nav class="p-4 space-y-2">
@@ -157,18 +173,17 @@
         </aside>
 
         <!-- Main Content -->
-        <main :class="[
-            sidebarOpen ? (
-                $store.app.sidebarMini ? 'lg:ml-20' : 'lg:ml-64'
-            ) : ''
-        ]" class="transition-all duration-300 ease-in-out">
+        <main class="transition-all duration-300 ease-in-out mt-16 lg:mt-0 lg:ml-64" :class="[
+                $store.app.sidebarMini && 'lg:ml-20'
+            ]">
             <!-- Top Navigation -->
-            <nav class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+            <nav
+                class="fixed top-0 left-0 right-0 lg:relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 z-20">
                 <div class="px-4 py-3 lg:px-6">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-2">
-                            <button @click="sidebarOpen = !sidebarOpen"
-                                class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <button @click="$store.app.sidebarOpen = !$store.app.sidebarOpen"
+                                class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
                                 <i class="fas fa-bars text-gray-600 dark:text-gray-300"></i>
                             </button>
                             <!-- Search Bar -->
@@ -305,12 +320,14 @@
                     </div>
 
                     <!-- Popular Destinations -->
-                    <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                    <div
+                        class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
                         <div class="p-6">
                             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Popular Destinations</h2>
                             <div class="mt-4 space-y-4">
                                 <div class="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/10 rounded-lg flex items-center justify-center">
+                                    <div
+                                        class="w-12 h-12 bg-blue-100 dark:bg-blue-900/10 rounded-lg flex items-center justify-center">
                                         <i class="fas fa-mountain text-blue-600 dark:text-blue-400 text-xl"></i>
                                     </div>
                                     <div class="flex-1">
@@ -321,13 +338,16 @@
                                                 <span class="ml-1 text-sm text-gray-500 dark:text-gray-400">4.9</span>
                                             </div>
                                             <span class="text-sm text-gray-400 dark:text-gray-500">•</span>
-                                            <span class="text-sm text-gray-500 dark:text-gray-400">152 bookings this month</span>
+                                            <span class="text-sm text-gray-500 dark:text-gray-400">152 bookings this
+                                                month</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/10 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-umbrella-beach text-purple-600 dark:text-purple-400 text-xl"></i>
+                                    <div
+                                        class="w-12 h-12 bg-purple-100 dark:bg-purple-900/10 rounded-lg flex items-center justify-center">
+                                        <i
+                                            class="fas fa-umbrella-beach text-purple-600 dark:text-purple-400 text-xl"></i>
                                     </div>
                                     <div class="flex-1">
                                         <h4 class="font-medium text-gray-900 dark:text-white">Maldives</h4>
@@ -337,7 +357,8 @@
                                                 <span class="ml-1 text-sm text-gray-500 dark:text-gray-400">4.8</span>
                                             </div>
                                             <span class="text-sm text-gray-400 dark:text-gray-500">•</span>
-                                            <span class="text-sm text-gray-500 dark:text-gray-400">138 bookings this month</span>
+                                            <span class="text-sm text-gray-500 dark:text-gray-400">138 bookings this
+                                                month</span>
                                         </div>
                                     </div>
                                 </div>

@@ -3,13 +3,16 @@ document.addEventListener('alpine:init', () => {
     Alpine.store('app', {
         // User preferences
         darkMode: false,
-        sidebarCollapsed: false,
+        sidebarOpen: false,  // Initialize as closed
         sidebarMini: false,
 
         // Toggle sidebar mini mode
         toggleSidebar() {
-            this.sidebarMini = !this.sidebarMini;
-            localStorage.setItem('sidebarMini', JSON.stringify(this.sidebarMini));
+            // Only toggle mini mode on desktop screens
+            if (window.innerWidth >= 1024) { // lg breakpoint
+                this.sidebarMini = !this.sidebarMini;
+                localStorage.setItem('sidebarMini', JSON.stringify(this.sidebarMini));
+            }
         },
 
         // Notification system
@@ -51,11 +54,25 @@ document.addEventListener('alpine:init', () => {
                 }
             }
 
-            // Load sidebar mini state
+            // Load sidebar mini mode preference
             const savedSidebarMini = localStorage.getItem('sidebarMini');
             if (savedSidebarMini !== null) {
                 this.sidebarMini = JSON.parse(savedSidebarMini);
             }
+
+            // Set initial sidebar state based on screen size
+            this.sidebarOpen = window.innerWidth >= 1024;
+
+            // Add resize listener
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 1024) {
+                    // On desktop, ensure sidebar is always visible
+                    this.sidebarOpen = true;
+                } else {
+                    // On mobile/tablet, keep sidebar closed
+                    this.sidebarOpen = false;
+                }
+            });
         }
     });
 });
