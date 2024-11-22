@@ -88,15 +88,16 @@
 
             <!-- Dark Mode Toggle -->
             <div class="absolute bottom-0 left-0 right-0 p-4">
-                <button @click="$store.app.toggleDarkMode()" class="flex items-center justify-between w-full p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                <button @click="$store.app.toggleDarkMode()" class="flex items-center justify-between w-full p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
                     <span class="flex items-center space-x-3">
-                        <i class="fas" :class="$store.app.darkMode ? 'fa-sun' : 'fa-moon'"></i>
-                        <span x-text="$store.app.darkMode ? 'Light Mode' : 'Dark Mode'">Dark Mode</span>
+                        <i class="fas text-lg" :class="$store.app.darkMode ? 'fa-sun text-amber-400' : 'fa-moon text-blue-600'"></i>
+                        <span x-text="$store.app.darkMode ? 'Light Mode' : 'Dark Mode'" class="font-medium"></span>
                     </span>
-                    <div class="relative inline-block w-10 h-6 transition duration-200 ease-in-out rounded-full bg-gray-200 dark:bg-gray-700">
-                        <div class="absolute inset-y-0 left-0 w-6 h-6 transition duration-200 ease-in-out transform"
-                            :class="$store.app.darkMode ? 'translate-x-4 bg-primary-400' : 'translate-x-0 bg-white'">
-                            <div class="absolute inset-0 rounded-full shadow-md"></div>
+                    <div class="relative">
+                        <div class="w-10 h-6 bg-gray-200 dark:bg-gray-700 rounded-full transition-colors duration-300">
+                            <div class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform duration-300 transform"
+                                :class="$store.app.darkMode ? 'translate-x-4 bg-purple-500' : 'translate-x-0'">
+                            </div>
                         </div>
                     </div>
                 </button>
