@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
+@layer base {
+    h1 {
+        @apply text-4xl font-bold text-gray-900;
+    }
+    h2 {
+        @apply text-2xl font-semibold text-gray-800;
+    }
+}
+
+/* Custom components */
+@layer components {
+    .btn-primary {
+        @apply px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors;
+    }
+    .card {
+        @apply bg-white rounded-xl shadow-lg p-6;
+    }
+}
+
+/* Custom utilities */
+@layer utilities {
+    .scrollbar-hide {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+}
