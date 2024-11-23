@@ -3,9 +3,12 @@ document.addEventListener('alpine:init', () => {
     Alpine.store('app', {
         // User preferences
         darkMode: false,
+        themePreference: 'system', // 'light', 'dark', or 'system'
         sidebarOpen: false,  // Initialize as closed
         sidebarMini: false,
         userDropdownOpen: false,
+        isDesktop: window.innerWidth >= 1024,
+        resizeTimeout: null,
 
         // User data
         user: {
@@ -76,10 +79,11 @@ document.addEventListener('alpine:init', () => {
 
         // Toggle sidebar mini mode
         toggleSidebar() {
-            // Only toggle mini mode on desktop screens
-            if (window.innerWidth >= 1024) { // lg breakpoint
+            if (this.isDesktop) {
                 this.sidebarMini = !this.sidebarMini;
-                localStorage.setItem('sidebarMini', JSON.stringify(this.sidebarMini));
+                localStorage.setItem('sidebarMini', this.sidebarMini);
+            } else {
+                this.sidebarOpen = !this.sidebarOpen;
             }
         },
 
@@ -110,37 +114,105 @@ document.addEventListener('alpine:init', () => {
             }
         },
 
+        // Theme handler
+        setTheme(preference) {
+            this.themePreference = preference;
+            localStorage.setItem('themePreference', preference);
+
+            if (preference === 'system') {
+                const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                this.darkMode = isDark;
+                localStorage.removeItem('darkMode');
+            } else {
+                this.darkMode = preference === 'dark';
+                localStorage.setItem('darkMode', this.darkMode);
+            }
+
+            if (this.darkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        },
+
         // Initialize
         init() {
-            // Load dark mode preference
-            const savedDarkMode = localStorage.getItem('darkMode');
-            if (savedDarkMode !== null) {
-                this.darkMode = JSON.parse(savedDarkMode);
-                if (this.darkMode) {
-                    document.documentElement.classList.add('dark');
+            // Initialize dark mode
+            const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            const handleDarkMode = (e) => {
+                if (this.themePreference === 'system') {
+                    this.darkMode = e.matches;
+                    if (this.darkMode) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
                 }
+            };
+
+            // Load theme preference
+            const savedTheme = localStorage.getItem('themePreference') || 'system';
+            this.themePreference = savedTheme;
+
+            if (savedTheme === 'system') {
+                this.darkMode = darkModeMediaQuery.matches;
+            } else {
+                this.darkMode = savedTheme === 'dark';
             }
 
-            // Load sidebar mini mode preference
+            if (this.darkMode) {
+                document.documentElement.classList.add('dark');
+            }
+
+            // Listen for system dark mode changes
+            darkModeMediaQuery.addEventListener('change', handleDarkMode);
+
+            // Initialize sidebar state
+            this.isDesktop = window.innerWidth >= 1024;
             const savedSidebarMini = localStorage.getItem('sidebarMini');
             if (savedSidebarMini !== null) {
-                this.sidebarMini = JSON.parse(savedSidebarMini);
+                this.sidebarMini = JSON.parse(savedSidebarMini) && this.isDesktop;
             }
 
-            // Set initial sidebar state based on screen size
-            this.sidebarOpen = window.innerWidth >= 1024;
+            let rafId = null;
+            const handleResize = () => {
+                const wasDesktop = this.isDesktop;
+                this.isDesktop = window.innerWidth >= 1024;
 
-            // Add resize listener
-            window.addEventListener('resize', () => {
-                if (window.innerWidth >= 1024) {
-                    // On desktop, ensure sidebar is always visible
-                    this.sidebarOpen = true;
-                } else {
-                    // On mobile/tablet, keep sidebar closed
-                    this.sidebarOpen = false;
+                if (wasDesktop !== this.isDesktop) {
+                    if (!this.isDesktop) {
+                        this.sidebarOpen = false;
+                        this.sidebarMini = false;
+                    } else {
+                        const savedMini = localStorage.getItem('sidebarMini');
+                        if (savedMini !== null) {
+                            this.sidebarMini = JSON.parse(savedMini);
+                        }
+                    }
                 }
-            });
-        }
+            };
+
+            const resizeListener = () => {
+                if (rafId) {
+                    cancelAnimationFrame(rafId);
+                }
+                rafId = requestAnimationFrame(handleResize);
+            };
+
+            window.addEventListener('resize', resizeListener);
+
+            // Initial check
+            handleResize();
+
+            // Cleanup function
+            return () => {
+                if (rafId) {
+                    cancelAnimationFrame(rafId);
+                }
+                window.removeEventListener('resize', resizeListener);
+                darkModeMediaQuery.removeEventListener('change', handleDarkMode);
+            };
+        },
     });
 });
 

@@ -14,6 +14,14 @@
             display: none !important;
         }
     </style>
+    <script>
+        (function () {
+            if (localStorage.getItem('darkMode') === 'true' ||
+                (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
 </head>
 
 <body
@@ -21,7 +29,7 @@
     x-data :class="{ 'dark': $store.app.darkMode }">
     <div class="min-h-screen">
         <!-- Mobile Sidebar Overlay -->
-        <div x-show="$store.app.sidebarOpen" x-cloak @click="$store.app.sidebarOpen = false"
+        <div x-cloak x-show="$store.app.sidebarOpen" @click="$store.app.sidebarOpen = false"
             class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-30 lg:hidden transition-opacity duration-300">
         </div>
 
@@ -164,7 +172,7 @@
             </nav>
 
             <!-- Dark Mode Toggle -->
-            <div class="absolute bottom-0 left-0 right-0 p-4">
+            <!-- <div class="absolute bottom-0 left-0 right-0 p-4">
                 <button @click="$store.app.toggleDarkMode()"
                     class="flex items-center justify-between w-full p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
                     <span class="flex items-center"
@@ -182,16 +190,70 @@
                         </div>
                     </div>
                 </button>
+            </div> -->
+
+            <div class="absolute bottom-0 left-0 right-0 p-4" :class="{ 'lg:hidden': $store.app.sidebarMini }">
+                <div class="flex items-center justify-center space-x-2">
+                    <div class="relative" x-data="{ tooltip: false }" @mouseenter="tooltip = true"
+                        @mouseleave="tooltip = false">
+                        <button @click="$store.app.setTheme('light')"
+                            class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
+                            :class="{ 'bg-gray-100 dark:bg-gray-700': $store.app.themePreference === 'light' }">
+                            <i class="fas fa-sun text-yellow-500 dark:text-yellow-400"></i>
+                        </button>
+                        <div x-show="tooltip" x-cloak
+                            class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 translate-y-1"
+                            x-transition:enter-end="opacity-100 translate-y-0">
+                            Light Mode
+                        </div>
+                    </div>
+                    <div class="relative" x-data="{ tooltip: false }" @mouseenter="tooltip = true"
+                        @mouseleave="tooltip = false">
+                        <button @click="$store.app.setTheme('dark')"
+                            class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
+                            :class="{ 'bg-gray-100 dark:bg-gray-700': $store.app.themePreference === 'dark' }">
+                            <i class="fas fa-moon text-blue-500 dark:text-blue-400"></i>
+                        </button>
+                        <div x-show="tooltip" x-cloak
+                            class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 translate-y-1"
+                            x-transition:enter-end="opacity-100 translate-y-0">
+                            Dark Mode
+                        </div>
+                    </div>
+                    <div class="relative" x-data="{ tooltip: false }" @mouseenter="tooltip = true"
+                        @mouseleave="tooltip = false">
+                        <button @click="$store.app.setTheme('system')"
+                            class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
+                            :class="{ 'bg-gray-100 dark:bg-gray-700': $store.app.themePreference === 'system' }">
+                            <i class="fas fa-desktop text-gray-500 dark:text-gray-400"></i>
+                        </button>
+                        <div x-show="tooltip" x-cloak
+                            class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 translate-y-1"
+                            x-transition:enter-end="opacity-100 translate-y-0">
+                            System Theme
+                        </div>
+                    </div>
+                </div>
             </div>
         </aside>
 
         <!-- Main Content -->
-        <main class="transition-all duration-300 ease-in-out mt-16 lg:mt-0 lg:ml-64" :class="[
+        <!-- <main class="transition-all duration-300 ease-in-out mt-16 lg:mt-0 lg:ml-64" :class="[
                 $store.app.sidebarMini && 'lg:ml-20'
-            ]">
+            ]"> -->
+        <main class="transition-all duration-300 ease-in-out mt-16 lg:mt-0"
+            :class="{ 'lg:ml-64': !$store.app.sidebarMini && $store.app.isDesktop, 'lg:ml-20': $store.app.sidebarMini && $store.app.isDesktop }">
             <!-- Top Navigation -->
-            <nav
-                class="fixed top-0 left-0 right-0 lg:relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 z-20">
+            <!-- <nav class="fixed top-0 left-0 right-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 z-20 transition-all duration-300"
+                :class="{ 'lg:left-20': $store.app.sidebarMini, 'lg:left-64': !$store.app.sidebarMini }"> -->
+            <nav class="fixed top-0 left-0 right-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 z-20 transition-all duration-300"
+                :class="{ 'lg:left-64': !$store.app.sidebarMini && $store.app.isDesktop, 'lg:left-20': $store.app.sidebarMini && $store.app.isDesktop }">
                 <div class="px-4 py-3 lg:px-6">
                     <div class="flex items-center justify-between">
                         <!-- Left Side -->
@@ -212,15 +274,15 @@
                         <!-- Right Side -->
                         <div class="flex items-center space-x-4">
                             <!-- Notifications -->
-                            <div class="relative" x-data="{ open: false }" 
-                                @mouseenter="open = true" 
+                            <div class="relative" x-data="{ open: false }" @mouseenter="open = true"
                                 @mouseleave="open = false">
                                 <button class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 relative">
                                     <i class="fas fa-bell text-gray-600 dark:text-gray-300"></i>
                                     <!-- Notification Badge -->
                                     <div x-show="$store.app.getUnreadCount() > 0"
                                         class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-                                        <span class="text-xs text-white font-medium" x-text="$store.app.getUnreadCount()"></span>
+                                        <span class="text-xs text-white font-medium"
+                                            x-text="$store.app.getUnreadCount()"></span>
                                     </div>
                                 </button>
                                 <!-- Notifications Dropdown -->
@@ -233,30 +295,39 @@
                                     x-transition:leave-start="opacity-100 scale-100"
                                     x-transition:leave-end="opacity-0 scale-95">
                                     <!-- Header -->
-                                    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-                                        <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Notifications</h3>
-                                        <button @click="$store.app.markAllAsRead()" 
+                                    <div
+                                        class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                                        <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Notifications
+                                        </h3>
+                                        <button @click="$store.app.markAllAsRead()"
                                             class="text-xs text-primary-600 dark:text-primary-400 hover:underline"
                                             x-show="$store.app.getUnreadCount() > 0">
                                             Mark all as read
                                         </button>
                                     </div>
                                     <!-- Notification List -->
-                                    <div class="divide-y divide-gray-200 dark:divide-gray-700 max-h-[400px] overflow-y-auto scrollbar-hide">
-                                        <template x-for="notification in $store.app.notifications" :key="notification.id">
+                                    <div
+                                        class="divide-y divide-gray-200 dark:divide-gray-700 max-h-[400px] overflow-y-auto scrollbar-hide">
+                                        <template x-for="notification in $store.app.notifications"
+                                            :key="notification.id">
                                             <div class="p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150"
                                                 :class="{ 'bg-blue-50/50 dark:bg-blue-900/20': !notification.read }"
                                                 @mouseenter="$store.app.markAsRead(notification.id)">
                                                 <div class="flex items-start space-x-3">
                                                     <div class="flex-shrink-0">
-                                                        <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center">
-                                                            <i class="fas" :class="notification.icon + ' text-primary-600 dark:text-primary-400'"></i>
+                                                        <div
+                                                            class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center">
+                                                            <i class="fas"
+                                                                :class="notification.icon + ' text-primary-600 dark:text-primary-400'"></i>
                                                         </div>
                                                     </div>
                                                     <div class="flex-1 min-w-0">
-                                                        <p class="text-sm font-medium text-gray-900 dark:text-white" x-text="notification.title"></p>
-                                                        <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2" x-text="notification.message"></p>
-                                                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1" x-text="notification.time"></p>
+                                                        <p class="text-sm font-medium text-gray-900 dark:text-white"
+                                                            x-text="notification.title"></p>
+                                                        <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2"
+                                                            x-text="notification.message"></p>
+                                                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1"
+                                                            x-text="notification.time"></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -264,22 +335,25 @@
                                     </div>
                                     <!-- Footer -->
                                     <div class="p-2 border-t border-gray-200 dark:border-gray-700">
-                                        <a href="#" class="block text-center text-sm text-primary-600 dark:text-primary-400 hover:underline p-2">
+                                        <a href="#"
+                                            class="block text-center text-sm text-primary-600 dark:text-primary-400 hover:underline p-2">
                                             View all notifications
                                         </a>
                                     </div>
                                 </div>
                             </div>
                             <!-- User Menu -->
-                            <div class="relative" x-data="{ open: false }" 
-                                @mouseenter="open = true" 
+                            <div class="relative" x-data="{ open: false }" @mouseenter="open = true"
                                 @mouseleave="open = false">
-                                <button class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <button
+                                    class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
                                     <img :src="$store.app.user.avatar" alt="User Avatar"
                                         class="w-8 h-8 rounded-full border-2 border-primary-500">
                                     <div class="hidden lg:block text-left">
-                                        <div class="text-sm font-medium text-gray-700 dark:text-gray-300" x-text="$store.app.user.name"></div>
-                                        <div class="text-xs text-gray-500 dark:text-gray-400" x-text="$store.app.user.role"></div>
+                                        <div class="text-sm font-medium text-gray-700 dark:text-gray-300"
+                                            x-text="$store.app.user.name"></div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400"
+                                            x-text="$store.app.user.role"></div>
                                     </div>
                                     <i class="fas fa-chevron-down text-xs text-gray-500 dark:text-gray-400 hidden lg:block"
                                         :class="{ 'transform rotate-180': open }"></i>
@@ -347,7 +421,11 @@
             </nav>
 
             <!-- Dashboard Content -->
-            <div class="p-6 lg:p-8">
+            <!-- <div class="p-6 lg:p-8"> -->
+            <!-- <div class="fixed top-0 bottom-0 right-0 overflow-y-auto p-6 pt-28 lg:px-8 transition-all duration-300 left-0 scrollbar-hide"
+                :class="{ 'lg:left-20': $store.app.sidebarMini, 'lg:left-64': !$store.app.sidebarMini }"> -->
+            <div class="fixed top-0 bottom-0 right-0 overflow-y-auto p-6 pt-28 lg:px-8 transition-all duration-300 left-0 scrollbar-hide"
+                :class="{ 'lg:left-64': !$store.app.sidebarMini && $store.app.isDesktop, 'lg:left-20': $store.app.sidebarMini && $store.app.isDesktop }">
                 <!-- Stats Overview -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     <div
