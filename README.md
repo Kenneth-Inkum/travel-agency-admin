@@ -6,6 +6,7 @@ A modern, responsive admin dashboard template designed specifically for travel a
 
 **Kenneth Ekow Inkum**
 - GitHub: [github.com/Kenneth-Inkum](https://github.com/Kenneth-Inkum)
+- Email: [xanthosoma1989@gmail.com](mailto:xanthosoma1989@gmail.com)
 - Role: Full Stack Developer
 - Location: Ghana
 - Portfolio: [Coming Soon]
@@ -28,7 +29,7 @@ A modern, responsive admin dashboard template designed specifically for travel a
 ## Tech Stack
 
 - HTML5
-- CSS3 with Tailwind CSS v3.3.2
+- CSS3 with Tailwind CSS v3.4.15
 - Alpine.js - Lightweight JavaScript framework
 - Font Awesome - Icon library
 - PostCSS with Autoprefixer
