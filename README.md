@@ -25,7 +25,11 @@ A modern, responsive admin dashboard template designed specifically for travel a
 ### Dashboard Features
 - 🎨 Modern and clean UI design with professional color scheme
 - 🌊 Animated background with floating shapes
-- 🌓 Dark mode support for comfortable viewing
+- 🌓 Enhanced dark mode with smooth transitions
+  - 300ms transition duration for all theme changes
+  - Consistent transition timing across all components
+  - Smooth background and border color transitions
+  - Proper backdrop blur transitions
 - 📱 Fully responsive layout (desktop, tablet, mobile)
 - 🧩 Modular component structure
 - 📊 Interactive charts and data visualization
@@ -49,75 +53,69 @@ A modern, responsive admin dashboard template designed specifically for travel a
 ```
 travel-agency-admin/
 ├── auth/                  # Authentication related pages
-│   ├── email-verification.html  # Email verification page
-│   ├── forgot-password.html     # Forgot password page
-│   ├── login.html              # Login page
-│   ├── otp-verification.html    # OTP verification page
-│   ├── register.html           # Registration page
-│   └── reset-password.html      # Password reset page
-├── dist/                 # Compiled CSS output
+│   ├── email-verification.html  # Email verification flow
+│   ├── forgot-password.html     # Password recovery
+│   ├── login.html              # Main login page
+│   ├── otp-verification.html    # OTP verification flow
+│   ├── privacy-policy.html     # Privacy policy page
+│   ├── register.html           # User registration
+│   ├── reset-password.html     # Password reset flow
+│   └── terms-conditions.html   # Terms and conditions
+├── dist/                 # Compiled assets
+│   └── output.css       # Compiled Tailwind CSS
 ├── js/                   # JavaScript files
-│   └── app.js           # Main application logic
+│   └── app.js           # Main Alpine.js application
 ├── src/                  # Source files
-│   └── input.css        # Tailwind input CSS
-├── index.html           # Main dashboard template
+│   └── input.css        # Tailwind directives
+├── bookings.html        # Bookings management page
+├── index.html           # Dashboard homepage
 ├── package.json         # Project dependencies
-├── tailwind.config.js   # Tailwind configuration
 ├── postcss.config.js    # PostCSS configuration
+├── tailwind.config.js   # Tailwind configuration
 └── README.md            # Project documentation
 ```
 
-## Authentication Flow
+## Recent Improvements
 
-1. **Registration**
-   - User fills registration form
-   - Email validation
-   - Password strength requirements
-   - Account creation
+### Theme System Enhancements
+- Implemented smooth transitions between light and dark modes (300ms)
+- Added consistent transition timing across all components
+- Improved system theme preference detection
+- Enhanced theme persistence with localStorage
+- Applied transitions to:
+  - Page backgrounds and gradients
+  - Card containers and borders
+  - Form elements and buttons
+  - Alert messages and notifications
+  - Navigation elements
 
-2. **Login**
-   - Secure login with email/password
-   - Remember me functionality
-   - Forgot password option
+### Authentication Pages
+- Unified design across all authentication pages
+- Consistent theme transitions in auth flows
+- Improved error message styling
+- Enhanced form container transitions
+- Updated privacy and terms pages with smooth transitions
 
-3. **Forgot Password**
-   - User enters registered email
-   - System validates email existence
-   - Initiates password reset flow
+### Performance Optimization
+- Optimized transition implementations
+- Reduced redundant code
+- Improved theme toggle mechanism
+- Enhanced backdrop blur performance
 
-4. **Email Verification**
-   - User enters their email address
-   - System validates email format
-   - Sends verification code to email
+### Component Architecture
+- Modular design for reusability
+- Consistent class naming conventions
+- Improved component organization
+- Enhanced state management
+- Better error handling patterns
 
-5. **OTP Verification**
-   - 6-digit OTP input system
-   - 60-second cooldown for resending OTP
-   - Loading states for all actions
-   - Error handling for invalid inputs
-
-6. **Password Reset**
-   - Secure password reset form
-   - Password strength validation
-   - Confirmation password matching
-
-## Theme Support
-
-- 🌞 Light Mode
-- 🌙 Dark Mode
-- 💻 System preference detection
-- 🔄 Smooth theme transitions
-- 💾 Persistent theme preference
-
-## Getting Started
+## Development Workflow
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- NPM (v6 or higher)
-- Modern web browser
+- Node.js 14.x or higher
+- NPM 6.x or higher
 
 ### Installation
-
 1. Clone the repository
    ```bash
    git clone https://github.com/Kenneth-Inkum/travel-agency-admin.git
@@ -179,7 +177,6 @@ travel-agency-admin/
 - Exportable reports
 
 ## Browser Support
-
 - Chrome (latest)
 - Firefox (latest)
 - Safari (latest)

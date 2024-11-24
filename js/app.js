@@ -59,6 +59,101 @@ document.addEventListener('alpine:init', () => {
             }
         ],
 
+        newBookingModal: false,
+        newBooking: {
+            customer: '',
+            destination: '',
+            date: '',
+            amount: '',
+            status: 'pending'
+        },
+        selectedStatus: 'all',
+        bookings: [
+            { id: 1, customer: 'John Doe', destination: 'Paris', date: '2024-02-15', status: 'confirmed', amount: 1250 },
+            { id: 2, customer: 'Jane Smith', destination: 'Bali', date: '2024-03-01', status: 'pending', amount: 1800 },
+            { id: 3, customer: 'Mike Johnson', destination: 'Tokyo', date: '2024-02-20', status: 'cancelled', amount: 2100 },
+            { id: 4, customer: 'Sarah Wilson', destination: 'New York', date: '2024-02-28', status: 'confirmed', amount: 1500 },
+            { id: 5, customer: 'David Brown', destination: 'London', date: '2024-03-05', status: 'pending', amount: 1750 }
+        ],
+        get filteredBookings() {
+            // First apply status filter
+            let filtered = this.selectedStatus === 'all'
+                ? this.bookings
+                : this.bookings.filter(booking => booking.status === this.selectedStatus);
+            
+            // Then apply search filter if there's a search term
+            if (this.filterConfig.search.trim()) {
+                const searchTerm = this.filterConfig.search.toLowerCase().trim();
+                filtered = filtered.filter(booking => 
+                    booking.customer.toLowerCase().includes(searchTerm) ||
+                    booking.destination.toLowerCase().includes(searchTerm) ||
+                    booking.status.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Finally apply sorting if a sort field is selected
+            if (this.sortConfig.field) {
+                filtered.sort((a, b) => {
+                    const aValue = a[this.sortConfig.field];
+                    const bValue = b[this.sortConfig.field];
+                    
+                    // Handle different data types
+                    if (this.sortConfig.field === 'amount') {
+                        return this.sortConfig.direction === 'asc' 
+                            ? aValue - bValue 
+                            : bValue - aValue;
+                    } else if (this.sortConfig.field === 'date') {
+                        return this.sortConfig.direction === 'asc'
+                            ? new Date(aValue) - new Date(bValue)
+                            : new Date(bValue) - new Date(aValue);
+                    } else {
+                        // String comparison for other fields
+                        return this.sortConfig.direction === 'asc'
+                            ? aValue.localeCompare(bValue)
+                            : bValue.localeCompare(aValue);
+                    }
+                });
+            }
+            
+            return filtered;
+        },
+        sortConfig: {
+            field: null,  // 'customer', 'destination', 'date', 'amount', 'status'
+            direction: 'asc' // 'asc' or 'desc'
+        },
+
+        filterConfig: {
+            search: '',
+            status: 'all'  // 'all', 'pending', 'confirmed', 'cancelled'
+        },
+
+        sortBookings(field) {
+            if (this.sortConfig.field === field) {
+                this.sortConfig.direction = this.sortConfig.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                this.sortConfig.field = field;
+                this.sortConfig.direction = 'asc';
+            }
+        },
+
+        submitBooking() {
+            // Add the new booking to the bookings array
+            this.bookings.push({
+                id: this.bookings.length + 1,
+                ...this.newBooking,
+                amount: parseFloat(this.newBooking.amount)
+            });
+            // Reset form and close modal
+            this.newBooking = {
+                customer: '',
+                destination: '',
+                date: '',
+                amount: '',
+                status: 'pending'
+            };
+            this.newBookingModal = false;
+        },
+
         // Get unread notifications count
         getUnreadCount() {
             return this.notifications.filter(n => !n.read).length;
@@ -107,11 +202,7 @@ document.addEventListener('alpine:init', () => {
         toggleDarkMode() {
             this.darkMode = !this.darkMode;
             localStorage.setItem('darkMode', this.darkMode);
-            if (this.darkMode) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
+            this.applyTheme();
         },
 
         // Theme handler
@@ -128,44 +219,84 @@ document.addEventListener('alpine:init', () => {
                 localStorage.setItem('darkMode', this.darkMode);
             }
 
+            this.applyTheme();
+        },
+
+        // Apply theme with transition
+        applyTheme() {
+            // Add transition class before changing theme
+            document.documentElement.classList.add('transition-colors', 'duration-200');
+            
+            // Apply dark mode
             if (this.darkMode) {
                 document.documentElement.classList.add('dark');
             } else {
                 document.documentElement.classList.remove('dark');
+            }
+
+            // Remove transition class after animation
+            setTimeout(() => {
+                document.documentElement.classList.remove('transition-colors', 'duration-200');
+            }, 200);
+        },
+
+        // Status configurations
+        statuses: {
+            pending: {
+                label: 'Pending',
+                icon: 'fa-clock',
+                color: 'text-yellow-600 dark:text-yellow-400',
+                bg: 'bg-yellow-100 dark:bg-yellow-900/30'
+            },
+            confirmed: {
+                label: 'Confirmed',
+                icon: 'fa-check-circle',
+                color: 'text-green-600 dark:text-green-400',
+                bg: 'bg-green-100 dark:bg-green-900/30'
+            },
+            in_progress: {
+                label: 'In Progress',
+                icon: 'fa-spinner',
+                color: 'text-blue-600 dark:text-blue-400',
+                bg: 'bg-blue-100 dark:bg-blue-900/30'
+            },
+            completed: {
+                label: 'Completed',
+                icon: 'fa-check-double',
+                color: 'text-emerald-600 dark:text-emerald-400',
+                bg: 'bg-emerald-100 dark:bg-emerald-900/30'
+            },
+            cancelled: {
+                label: 'Cancelled',
+                icon: 'fa-times-circle',
+                color: 'text-red-600 dark:text-red-400',
+                bg: 'bg-red-100 dark:bg-red-900/30'
+            }
+        },
+
+        // Update booking status
+        updateBookingStatus(bookingId, newStatus) {
+            const booking = this.bookings.find(b => b.id === bookingId);
+            if (booking) {
+                booking.status = newStatus;
+                // Add notification
+                this.addNotification(`Booking #${bookingId} status updated to ${this.statuses[newStatus].label}`, 'status');
             }
         },
 
         // Initialize
         init() {
             // Initialize dark mode
-            const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            const handleDarkMode = (e) => {
+            const themePreference = localStorage.getItem('themePreference') || 'system';
+            this.setTheme(themePreference);
+
+            // Watch for system theme changes
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
                 if (this.themePreference === 'system') {
                     this.darkMode = e.matches;
-                    if (this.darkMode) {
-                        document.documentElement.classList.add('dark');
-                    } else {
-                        document.documentElement.classList.remove('dark');
-                    }
+                    this.applyTheme();
                 }
-            };
-
-            // Load theme preference
-            const savedTheme = localStorage.getItem('themePreference') || 'system';
-            this.themePreference = savedTheme;
-
-            if (savedTheme === 'system') {
-                this.darkMode = darkModeMediaQuery.matches;
-            } else {
-                this.darkMode = savedTheme === 'dark';
-            }
-
-            if (this.darkMode) {
-                document.documentElement.classList.add('dark');
-            }
-
-            // Listen for system dark mode changes
-            darkModeMediaQuery.addEventListener('change', handleDarkMode);
+            });
 
             // Initialize sidebar state
             this.isDesktop = window.innerWidth >= 1024;
@@ -210,7 +341,6 @@ document.addEventListener('alpine:init', () => {
                     cancelAnimationFrame(rafId);
                 }
                 window.removeEventListener('resize', resizeListener);
-                darkModeMediaQuery.removeEventListener('change', handleDarkMode);
             };
         },
     });
