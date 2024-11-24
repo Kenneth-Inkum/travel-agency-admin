@@ -13,15 +13,24 @@ A modern, responsive admin dashboard template designed specifically for travel a
 
 ## Features
 
+### Authentication System
+- 🔐 Secure multi-step authentication flow
+- ✉️ Email verification with OTP system
+- 🔄 60-second cooldown for OTP resend
+- 🎨 Consistent UI across all authentication pages
+- 🌓 Dark mode support for all authentication flows
+- ✈️ Unique airplane-themed animations
+- 📱 Fully responsive authentication pages
+
+### Dashboard Features
 - 🎨 Modern and clean UI design with professional color scheme
-- 🌊 Animated background with floating shapes for enhanced visual appeal
-- 🌓 Dark mode support for comfortable viewing in any environment
-- 📱 Fully responsive layout that works on desktop, tablet, and mobile devices
-- 🧩 Modular component structure for easy maintenance and scalability
-- 📊 Interactive charts and data visualization for business insights
-- 🚀 Fast and lightweight implementation for optimal performance
-- 🎯 Travel agency-specific features including booking management
-- 🔐 Secure authentication system with user roles
+- 🌊 Animated background with floating shapes
+- 🌓 Dark mode support for comfortable viewing
+- 📱 Fully responsive layout (desktop, tablet, mobile)
+- 🧩 Modular component structure
+- 📊 Interactive charts and data visualization
+- 🚀 Fast and lightweight implementation
+- 🎯 Travel agency-specific booking management
 - 📱 Mobile-first design approach
 - 🔄 Real-time updates and notifications
 - 📈 Advanced reporting capabilities
@@ -30,8 +39,8 @@ A modern, responsive admin dashboard template designed specifically for travel a
 
 - HTML5
 - CSS3 with Tailwind CSS v3.4.15
-- Alpine.js - Lightweight JavaScript framework
-- Font Awesome - Icon library
+- Alpine.js v3.x.x - Lightweight JavaScript framework
+- Font Awesome v6.4.0 - Icon library
 - PostCSS with Autoprefixer
 - NPM for package management
 
@@ -40,18 +49,65 @@ A modern, responsive admin dashboard template designed specifically for travel a
 ```
 travel-agency-admin/
 ├── auth/                  # Authentication related pages
-│   └── login.html        # Login page
+│   ├── email-verification.html  # Email verification page
+│   ├── forgot-password.html     # Forgot password page
+│   ├── login.html              # Login page
+│   ├── otp-verification.html    # OTP verification page
+│   ├── register.html           # Registration page
+│   └── reset-password.html      # Password reset page
 ├── dist/                 # Compiled CSS output
 ├── js/                   # JavaScript files
 │   └── app.js           # Main application logic
 ├── src/                  # Source files
 │   └── input.css        # Tailwind input CSS
 ├── index.html           # Main dashboard template
+├── package.json         # Project dependencies
 ├── tailwind.config.js   # Tailwind configuration
 ├── postcss.config.js    # PostCSS configuration
-├── package.json         # Project dependencies
-└── README.md           # Project documentation
+└── README.md            # Project documentation
 ```
+
+## Authentication Flow
+
+1. **Registration**
+   - User fills registration form
+   - Email validation
+   - Password strength requirements
+   - Account creation
+
+2. **Login**
+   - Secure login with email/password
+   - Remember me functionality
+   - Forgot password option
+
+3. **Forgot Password**
+   - User enters registered email
+   - System validates email existence
+   - Initiates password reset flow
+
+4. **Email Verification**
+   - User enters their email address
+   - System validates email format
+   - Sends verification code to email
+
+5. **OTP Verification**
+   - 6-digit OTP input system
+   - 60-second cooldown for resending OTP
+   - Loading states for all actions
+   - Error handling for invalid inputs
+
+6. **Password Reset**
+   - Secure password reset form
+   - Password strength validation
+   - Confirmation password matching
+
+## Theme Support
+
+- 🌞 Light Mode
+- 🌙 Dark Mode
+- 💻 System preference detection
+- 🔄 Smooth theme transitions
+- 💾 Persistent theme preference
 
 ## Getting Started
 
@@ -113,14 +169,6 @@ travel-agency-admin/
 - Customer segmentation
 - Loyalty program tracking
 - Custom notes and tags
-
-### Authentication
-- Secure login system
-- User session management
-- Protected routes
-- Role-based access control
-- Password recovery system
-- Two-factor authentication (coming soon)
 
 ### Analytics
 - Interactive charts and graphs

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" class="min-h-screen scrollbar-hide">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelPro - Terms & Conditions</title>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="../dist/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../js/app.js"></script>
+    <script>
+        (function () {
+            if (localStorage.getItem('darkMode') === 'true' ||
+                (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-purple-900 transition-colors duration-300 min-h-screen"
+    x-data :class="{ 'dark': $store.app.darkMode }">
+
+    <div
+        class="fixed top-0 left-0 right-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 z-50">
+        <div class="px-4 py-3">
+            <div class="flex items-center justify-between">
+                <a href="register.html" class="text-blue-600 dark:text-blue-400 hover:underline">
+                    <i class="fas fa-arrow-left mr-2"></i>Back
+                </a>
+
+                <!-- Dark Mode Toggle -->
+                <div class="flex items-center space-x-2">
+                    <div class="relative" x-data="{ tooltip: false }" @mouseenter="tooltip = true"
+                        @mouseleave="tooltip = false">
+                        <button @click="$store.app.setTheme('light')"
+                            class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
+                            :class="{ 'bg-gray-100 dark:bg-gray-700': $store.app.themePreference === 'light' }">
+                            <i class="fas fa-sun text-yellow-500 dark:text-yellow-400"></i>
+                        </button>
+                        <div x-show="tooltip" x-cloak
+                            class="absolute top-full right-0 mt-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap">
+                            Light Mode
+                        </div>
+                    </div>
+                    <div class="relative" x-data="{ tooltip: false }" @mouseenter="tooltip = true"
+                        @mouseleave="tooltip = false">
+                        <button @click="$store.app.setTheme('dark')"
+                            class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
+                            :class="{ 'bg-gray-100 dark:bg-gray-700': $store.app.themePreference === 'dark' }">
+                            <i class="fas fa-moon text-gray-700 dark:text-gray-300"></i>
+                        </button>
+                        <div x-show="tooltip" x-cloak
+                            class="absolute top-full right-0 mt-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap">
+                            Dark Mode
+                        </div>
+                    </div>
+                    <div class="relative" x-data="{ tooltip: false }" @mouseenter="tooltip = true"
+                        @mouseleave="tooltip = false">
+                        <button @click="$store.app.setTheme('system')"
+                            class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
+                            :class="{ 'bg-gray-100 dark:bg-gray-700': $store.app.themePreference === 'system' }">
+                            <i class="fas fa-desktop text-gray-700 dark:text-gray-300"></i>
+                        </button>
+                        <div x-show="tooltip" x-cloak
+                            class="absolute top-full right-0 mt-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap">
+                            System Theme
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="absolute inset-0 bg-gray-200/5 dark:bg-gray-100/5 bg-dot"></div>
+        <div
+            class="absolute w-72 h-72 bg-indigo-400/15 dark:bg-indigo-400/10 rounded-full blur-3xl top-[10%] right-[15%] animate-float">
+        </div>
+        <div
+            class="absolute w-96 h-96 bg-emerald-400/15 dark:bg-emerald-400/10 rounded-full blur-3xl bottom-[20%] left-[10%] animate-float">
+        </div>
+        <div
+            class="absolute w-64 h-64 bg-amber-400/15 dark:bg-amber-400/10 rounded-full blur-3xl top-[50%] right-[30%] animate-float">
+        </div>
+
+        <!-- Animated Airplanes -->
+        <div
+            class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[15%] left-[-50px] animate-flight-1">
+            <i class="fas fa-plane"></i>
+        </div>
+        <div
+            class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[35%] right-[-50px] animate-flight-2">
+            <i class="fas fa-plane"></i>
+        </div>
+        <div
+            class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[55%] left-[-50px] animate-flight-3">
+            <i class="fas fa-plane"></i>
+        </div>
+        <div
+            class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none bottom-[25%] right-[-50px] animate-flight-4">
+            <i class="fas fa-plane"></i>
+        </div>
+        <div
+            class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[75%] left-[-50px] animate-flight-5">
+            <i class="fas fa-plane"></i>
+        </div>
+        <div
+            class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[65%] right-[-50px] animate-flight-6">
+            <i class="fas fa-plane"></i>
+        </div>
+        <div
+            class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[45%] left-[-50px] animate-flight-7">
+            <i class="fas fa-plane"></i>
+        </div>
+        <div
+            class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[25%] right-[-50px] animate-flight-8">
+            <i class="fas fa-plane"></i>
+        </div>
+        <div
+            class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none bottom-[15%] left-[-50px] animate-flight-9">
+            <i class="fas fa-plane"></i>
+        </div>
+        <div
+            class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[75%] right-[-50px] animate-flight-10">
+            <i class="fas fa-plane"></i>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="relative min-h-screen flex items-center justify-center p-4 pt-24">
+        <div class="w-full max-w-4xl bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl shadow-xl p-8">
+            <!-- Logo and Title -->
+            <div class="text-center mb-8">
+                <div
+                    class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 mb-4">
+                    <i class="fas fa-scale-balanced text-3xl text-white"></i>
+                </div>
+                <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">Terms & Conditions</h1>
+                <p class="text-gray-600 dark:text-gray-400">Last updated: January 2024</p>
+            </div>
+
+            <!-- Terms Content -->
+            <div class="space-y-8">
+                <section>
+                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">1. Introduction</h2>
+                    <p class="text-gray-700 dark:text-gray-300">Welcome to TravelPro Admin. By accessing our service,
+                        you agree to these terms. Please read them carefully.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">2. Use of Service</h2>
+                    <p class="text-gray-700 dark:text-gray-300">Our service is designed for travel agency management.
+                        You must use it responsibly and legally.</p>
+                    <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 mt-4 space-y-2">
+                        <li>Manage bookings and reservations</li>
+                        <li>Handle customer information securely</li>
+                        <li>Process travel arrangements</li>
+                        <li>Generate reports and analytics</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">3. Account Terms</h2>
+                    <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-2">
+                        <li>You must provide accurate information during registration</li>
+                        <li>You are responsible for maintaining account security</li>
+                        <li>Notify us immediately of any unauthorized access</li>
+                        <li>Keep your login credentials confidential</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">4. Privacy & Data</h2>
+                    <p class="text-gray-700 dark:text-gray-300">We protect your data according to our <a
+                            href="privacy-policy.html" class="text-blue-600 dark:text-blue-400 hover:underline">Privacy
+                            Policy</a>. Your privacy and data security are our top priorities.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">5. Service Modifications</h2>
+                    <p class="text-gray-700 dark:text-gray-300">We reserve the right to modify or discontinue any part
+                        of our service with reasonable notice. We will communicate any significant changes via email.
+                    </p>
+                </section>
+            </div>
+
+            <!-- Footer -->
+            <div class="mt-8 text-center">
+                <a href="register.html"
+                    class="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Registration
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TravelPro - Modern Travel Agency Management</title>
+    <title>TravelPro - Create Account</title>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <link href="../dist/output.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -29,13 +29,6 @@
     x-data :class="{ 'dark': $store.app.darkMode }">
 
     <!-- Dark Mode Toggle -->
-    <!-- <div class="fixed top-4 right-4 z-50">
-        <button @click="$store.app.toggleDarkMode()"
-            class="p-2 rounded-lg bg-white/30 dark:bg-gray-800/30 backdrop-blur-sm hover:bg-white/40 dark:hover:bg-gray-800/40 transition-colors">
-            <i class="fas text-lg" :class="$store.app.darkMode ? 'fa-sun text-amber-400' : 'fa-moon text-blue-600'"></i>
-        </button>
-    </div> -->
-
     <div class="fixed top-4 right-8 z-50">
         <div class="flex items-center justify-center space-x-2">
             <div class="relative" x-data="{ tooltip: false }" @mouseenter="tooltip = true"
@@ -46,10 +39,7 @@
                     <i class="fas fa-sun text-yellow-500 dark:text-yellow-400"></i>
                 </button>
                 <div x-show="tooltip" x-cloak
-                    class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap"
-                    x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 translate-y-1"
-                    x-transition:enter-end="opacity-100 translate-y-0">
+                    class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap">
                     Light Mode
                 </div>
             </div>
@@ -61,10 +51,7 @@
                     <i class="fas fa-moon text-blue-500 dark:text-blue-400"></i>
                 </button>
                 <div x-show="tooltip" x-cloak
-                    class="absolute top-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap"
-                    x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 translate-y-1"
-                    x-transition:enter-end="opacity-100 translate-y-0">
+                    class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap">
                     Dark Mode
                 </div>
             </div>
@@ -76,10 +63,7 @@
                     <i class="fas fa-desktop text-gray-500 dark:text-gray-400"></i>
                 </button>
                 <div x-show="tooltip" x-cloak
-                    class="absolute top-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap"
-                    x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 translate-y-1"
-                    x-transition:enter-end="opacity-100 translate-y-0">
+                    class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap">
                     System Theme
                 </div>
             </div>
@@ -144,13 +128,20 @@
 
     <!-- Main Content -->
     <div class="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8" x-data="{ 
+        fullName: '',
         email: '',
         password: '',
-        rememberMe: false,
+        confirmPassword: '',
+        agreeToTerms: false,
         showPassword: false,
+        showConfirmPassword: false,
         loading: false,
         error: null,
-        async login() {
+        async register() {
+            if (this.password !== this.confirmPassword) {
+                this.error = 'Passwords do not match';
+                return;
+            }
             this.loading = true;
             this.error = null;
             await new Promise(resolve => setTimeout(resolve, 1000));
@@ -161,21 +152,35 @@
         <div class="text-center mb-8">
             <div
                 class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 mb-4">
-                <i class="fas fa-plane-departure text-3xl text-white transform -rotate-45"></i>
+                <i class="fas fa-user-plus text-3xl text-white"></i>
             </div>
-            <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">TravelPro</h1>
-            <p class="text-gray-600 dark:text-gray-400">Welcome back to your travel dashboard</p>
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">Create Account</h1>
+            <p class="text-gray-600 dark:text-gray-400">Join TravelPro and start managing your travel business</p>
         </div>
 
-        <!-- Login Form -->
+        <!-- Registration Form -->
         <div class="w-full max-w-md">
             <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg rounded-2xl shadow-xl">
                 <div class="px-8 py-6">
-                    <form @submit.prevent="login" class="space-y-5">
+                    <form @submit.prevent="register" class="space-y-5">
                         <!-- Error Alert -->
                         <div x-show="error" x-cloak
                             class="bg-red-50 dark:bg-red-900/50 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg text-sm">
                             <p x-text="error"></p>
+                        </div>
+
+                        <!-- Full Name -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full
+                                Name</label>
+                            <div class="relative">
+                                <input type="text" x-model="fullName" required
+                                    class="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700/50 dark:text-white dark:placeholder-gray-400"
+                                    placeholder="John Doe">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-user text-gray-400 dark:text-gray-500"></i>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Email -->
@@ -210,44 +215,62 @@
                             </div>
                         </div>
 
-                        <!-- Remember Me & Forgot Password -->
-                        <div class="flex items-center justify-between">
-                            <label class="flex items-center">
-                                <input type="checkbox" x-model="rememberMe"
-                                    class="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700">
-                                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
-                            </label>
-                            <a href="forgot-password.html"
-                                class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">
-                                Forgot password?
-                            </a>
+                        <!-- Confirm Password -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm
+                                Password</label>
+                            <div class="relative">
+                                <input :type="showConfirmPassword ? 'text' : 'password'" x-model="confirmPassword"
+                                    required
+                                    class="w-full pl-10 pr-10 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700/50 dark:text-white dark:placeholder-gray-400"
+                                    placeholder="••••••••">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-lock text-gray-400 dark:text-gray-500"></i>
+                                </div>
+                                <button type="button" @click="showConfirmPassword = !showConfirmPassword"
+                                    class="absolute inset-y-0 right-0 pr-3 flex items-center focus:outline-none">
+                                    <i class="fas" :class="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"
+                                        class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <!-- Login Button -->
+                        <!-- Terms and Conditions -->
+                        <div class="flex items-center">
+                            <input type="checkbox" x-model="agreeToTerms" id="terms"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="terms" class="ml-2 text-sm text-gray-600 dark:text-gray-400">
+                                I agree to the 
+                                <a href="terms-conditions.html" class="text-blue-600 dark:text-blue-400 hover:underline">Terms and Conditions</a>
+                                and
+                                <a href="privacy-policy.html" class="text-blue-600 dark:text-blue-400 hover:underline">Privacy Policy</a>
+                            </label>
+                        </div>
+                        
+                        <!-- Register Button -->
                         <button type="submit"
                             class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2.5 rounded-lg hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-all duration-200 flex items-center justify-center"
-                            :class="{ 'opacity-75 cursor-not-allowed': loading }" :disabled="loading">
+                            :class="{ 'opacity-75 cursor-not-allowed': loading }" :disabled="loading || !agreeToTerms">
                             <i class="fas fa-circle-notch fa-spin mr-2" x-show="loading"></i>
-                            <span x-text="loading ? 'Signing in...' : 'Sign in'"></span>
+                            <span x-text="loading ? 'Creating account...' : 'Create Account'"></span>
                         </button>
                     </form>
                 </div>
 
-                <!-- Register Link -->
+                <!-- Login Link -->
                 <div
                     class="px-8 py-4 bg-gray-50/50 dark:bg-gray-700/50 rounded-b-2xl border-t border-gray-200 dark:border-gray-700">
                     <p class="text-center text-sm text-gray-600 dark:text-gray-400">
-                        Don't have an account?
-                        <a href="register.html"
+                        Already have an account?
+                        <a href="login.html"
                             class="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">
-                            Create one now
+                            Sign in
                         </a>
                     </p>
                 </div>
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

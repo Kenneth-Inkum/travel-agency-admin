@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" class="min-h-screen">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelPro - OTP Verification</title>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="../dist/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../js/app.js"></script>
+    <script>
+        (function () {
+            if (localStorage.getItem('darkMode') === 'true' ||
+                (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-purple-900 transition-colors duration-300 min-h-screen"
+    x-data :class="{ 'dark': $store.app.darkMode }">
+
+    <!-- Dark Mode Toggle -->
+    <div class="fixed top-4 right-8 z-50">
+        <div class="flex items-center justify-center space-x-2">
+            <div class="relative" x-data="{ tooltip: false }" @mouseenter="tooltip = true"
+                @mouseleave="tooltip = false">
+                <button @click="$store.app.setTheme('light')"
+                    class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
+                    :class="{ 'bg-gray-100 dark:bg-gray-700': $store.app.themePreference === 'light' }">
+                    <i class="fas fa-sun text-yellow-500 dark:text-yellow-400"></i>
+                </button>
+                <div x-show="tooltip" x-cloak
+                    class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-1"
+                    x-transition:enter-end="opacity-100 translate-y-0">
+                    Light Mode
+                </div>
+            </div>
+            <div class="relative" x-data="{ tooltip: false }" @mouseenter="tooltip = true"
+                @mouseleave="tooltip = false">
+                <button @click="$store.app.setTheme('dark')"
+                    class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
+                    :class="{ 'bg-gray-100 dark:bg-gray-700': $store.app.themePreference === 'dark' }">
+                    <i class="fas fa-moon text-blue-500 dark:text-blue-400"></i>
+                </button>
+                <div x-show="tooltip" x-cloak
+                    class="absolute top-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-1"
+                    x-transition:enter-end="opacity-100 translate-y-0">
+                    Dark Mode
+                </div>
+            </div>
+            <div class="relative" x-data="{ tooltip: false }" @mouseenter="tooltip = true"
+                @mouseleave="tooltip = false">
+                <button @click="$store.app.setTheme('system')"
+                    class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
+                    :class="{ 'bg-gray-100 dark:bg-gray-700': $store.app.themePreference === 'system' }">
+                    <i class="fas fa-desktop text-gray-500 dark:text-gray-400"></i>
+                </button>
+                <div x-show="tooltip" x-cloak
+                    class="absolute top-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-1"
+                    x-transition:enter-end="opacity-100 translate-y-0">
+                    System Theme
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="absolute inset-0 bg-gray-200/5 dark:bg-gray-100/5 bg-dot"></div>
+        <div
+            class="absolute w-72 h-72 bg-indigo-400/15 dark:bg-indigo-400/10 rounded-full blur-3xl top-[10%] right-[15%] animate-float">
+        </div>
+        <div
+            class="absolute w-96 h-96 bg-emerald-400/15 dark:bg-emerald-400/10 rounded-full blur-3xl bottom-[20%] left-[10%] animate-float">
+        </div>
+        <div
+            class="absolute w-64 h-64 bg-amber-400/15 dark:bg-amber-400/10 rounded-full blur-3xl top-[50%] right-[30%] animate-float">
+        </div>
+    </div>
+
+    <!-- Animated Airplanes -->
+    <div
+        class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[15%] left-[-50px] animate-flight-1">
+        <i class="fas fa-plane"></i>
+    </div>
+    <div
+        class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[35%] right-[-50px] animate-flight-2">
+        <i class="fas fa-plane"></i>
+    </div>
+    <div
+        class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[55%] left-[-50px] animate-flight-3">
+        <i class="fas fa-plane"></i>
+    </div>
+    <div
+        class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none bottom-[25%] right-[-50px] animate-flight-4">
+        <i class="fas fa-plane"></i>
+    </div>
+    <div
+        class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[75%] left-[-50px] animate-flight-5">
+        <i class="fas fa-plane"></i>
+    </div>
+    <div
+        class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[65%] right-[-50px] animate-flight-6">
+        <i class="fas fa-plane"></i>
+    </div>
+    <div
+        class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[45%] left-[-50px] animate-flight-7">
+        <i class="fas fa-plane"></i>
+    </div>
+    <div
+        class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[25%] right-[-50px] animate-flight-8">
+        <i class="fas fa-plane"></i>
+    </div>
+    <div
+        class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none bottom-[15%] left-[-50px] animate-flight-9">
+        <i class="fas fa-plane"></i>
+    </div>
+    <div
+        class="fixed text-2xl text-gray-400/30 dark:text-gray-300/30 opacity-0 -z-10 pointer-events-none top-[75%] right-[-50px] animate-flight-10">
+        <i class="fas fa-plane"></i>
+    </div>
+
+    <!-- Main Content -->
+    <div class="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8" x-data="{ 
+        otp: ['', '', '', '', '', ''],
+        loading: false,
+        error: null,
+        resendCountdown: 60,
+        get fullOtp() {
+            return this.otp.join('');
+        },
+        startResendCountdown() {
+            this.resendCountdown = 60;
+            const timer = setInterval(() => {
+                this.resendCountdown--;
+                if (this.resendCountdown <= 0) {
+                    clearInterval(timer);
+                }
+            }, 1000);
+        },
+        async verifyOTP() {
+            this.loading = true;
+            this.error = null;
+            
+            // Validate OTP is complete
+            if (this.fullOtp.length !== 6) {
+                this.error = 'Please enter the complete 6-digit code';
+                this.loading = false;
+                return;
+            }
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            window.location.href = 'reset-password.html';
+        },
+        async resendOTP() {
+            if (this.resendCountdown > 0) return;
+            this.loading = true;
+            this.error = null;
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            this.startResendCountdown();
+            this.loading = false;
+        }
+    }">
+        <!-- Logo and Title -->
+        <div class="text-center mb-8">
+            <div
+                class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 mb-4">
+                <i class="fas fa-shield-alt text-3xl text-white"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">OTP Verification</h1>
+            <p class="text-gray-600 dark:text-gray-400">Enter the 6-digit code sent to your email</p>
+        </div>
+
+        <!-- OTP Verification Form -->
+        <div class="w-full max-w-md">
+            <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg rounded-2xl shadow-xl">
+                <div class="px-8 py-6">
+                    <form x-data="{
+                        loading: false,
+                        error: null,
+                        resendCountdown: 0,
+                        startResendCountdown() {
+                            this.resendCountdown = 60;
+                            const timer = setInterval(() => {
+                                this.resendCountdown--;
+                                if (this.resendCountdown <= 0) {
+                                    clearInterval(timer);
+                                }
+                            }, 1000);
+                        },
+                        async resendOTP() {
+                            if (this.resendCountdown > 0) return;
+                            this.loading = true;
+                            this.error = null;
+                            
+                            // Simulate API call
+                            await new Promise(resolve => setTimeout(resolve, 1000));
+                            
+                            this.loading = false;
+                            this.startResendCountdown();
+                        },
+                        async verifyOTP() {
+                            this.loading = true;
+                            this.error = null;
+                            
+                            // Simulate API call
+                            await new Promise(resolve => setTimeout(resolve, 1000));
+                            
+                            window.location.href = 'reset-password.html';
+                        }
+                    }" 
+                    @submit.prevent="verifyOTP"
+                    class="space-y-5">
+                        <!-- Error Alert -->
+                        <div x-show="error" x-cloak
+                            class="bg-red-50 dark:bg-red-900/50 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg text-sm">
+                            <p x-text="error"></p>
+                        </div>
+
+                        <!-- OTP Input -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Verification Code</label>
+                            <div class="flex justify-center space-x-2">
+                                <input type="text" maxlength="1" inputmode="numeric" pattern="\d*"
+                                    class="w-12 h-14 text-center text-xl border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700/50 dark:text-white"
+                                    placeholder="•">
+                                <input type="text" maxlength="1" inputmode="numeric" pattern="\d*"
+                                    class="w-12 h-14 text-center text-xl border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700/50 dark:text-white"
+                                    placeholder="•">
+                                <input type="text" maxlength="1" inputmode="numeric" pattern="\d*"
+                                    class="w-12 h-14 text-center text-xl border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700/50 dark:text-white"
+                                    placeholder="•">
+                                <input type="text" maxlength="1" inputmode="numeric" pattern="\d*"
+                                    class="w-12 h-14 text-center text-xl border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700/50 dark:text-white"
+                                    placeholder="•">
+                                <input type="text" maxlength="1" inputmode="numeric" pattern="\d*"
+                                    class="w-12 h-14 text-center text-xl border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700/50 dark:text-white"
+                                    placeholder="•">
+                                <input type="text" maxlength="1" inputmode="numeric" pattern="\d*"
+                                    class="w-12 h-14 text-center text-xl border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700/50 dark:text-white"
+                                    placeholder="•">
+                                <input type="hidden" name="otp" required>
+                            </div>
+                        </div>
+
+                        <!-- Resend OTP -->
+                        <div class="text-center text-sm text-gray-600 dark:text-gray-400">
+                            Didn't receive the code?
+                            <button type="button" @click="resendOTP" :disabled="resendCountdown > 0 || loading"
+                                class="font-medium text-blue-600 dark:text-blue-400 hover:underline disabled:opacity-50 disabled:cursor-not-allowed">
+                                Resend Code
+                                <template x-if="resendCountdown > 0">
+                                    <span x-text="`(${resendCountdown}s)`"></span>
+                                </template>
+                            </button>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                            class="w-full py-2.5 text-sm font-semibold text-white bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all"
+                            :disabled="loading">
+                            <span x-show="!loading">Verify OTP</span>
+                            <span x-show="loading" class="flex items-center justify-center">
+                                <svg class="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                        stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                    </path>
+                                </svg>
+                                Verifying...
+                            </span>
+                        </button>
+                    </form>
+                </div>
+
+                <div
+                    class="px-8 py-4 bg-gray-50/50 dark:bg-gray-700/50 rounded-b-2xl border-t border-gray-200 dark:border-gray-700">
+                    <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+                        <a href="email-verification.html"
+                            class="font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                            Change Email
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
